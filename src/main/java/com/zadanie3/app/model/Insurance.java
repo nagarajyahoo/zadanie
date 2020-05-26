@@ -17,6 +17,8 @@ public class Insurance {
     private int personId;
     private String beginDate;
     private String amount;
+    private String personFirstName;
+    private String personSurname;
     private String monthlyInstallment;
 
 

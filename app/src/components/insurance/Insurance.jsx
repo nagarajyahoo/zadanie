@@ -31,6 +31,7 @@ class Insurance extends React.Component {
             insuranceCategory: 'life',
             insuranceType: undefined,
             personId: undefined,
+            personFirstName: undefined,
             beginDate: undefined,
             amount: undefined,
             monthlyInstallment: undefined,
@@ -141,7 +142,7 @@ class Insurance extends React.Component {
                 <tr>
                     <td><input type="checkbox" onChange={() => this.selectedInsurance(insurance.id)}/></td>
                     <td>{insurance.id}</td>
-                    <td>{insurance.personId}</td>
+                    <td>{insurance.personFirstName}</td>
                     <td>{insurance.insuranceCategory === 'life' ? 'Life Insurance' : 'Non Life Insurance'}</td>
                     <td>{insurance.insuranceType}</td>
                     <td>{insurance.creationDate}</td>

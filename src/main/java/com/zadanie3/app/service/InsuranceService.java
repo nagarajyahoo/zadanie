@@ -2,8 +2,10 @@ package com.zadanie3.app.service;
 
 import com.zadanie3.app.model.Insurance;
 import com.zadanie3.app.model.Insurances;
+import com.zadanie3.app.model.Person;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -15,13 +17,24 @@ public class InsuranceService {
     private static int insuranceCounter = 1;
     private static DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
 
+    private final PersonService personService;
+
+    @Inject
+    public InsuranceService(PersonService personService) {
+        this.personService = personService;
+    }
+
     public Insurances getInsurances(int personId) {
         Insurances insurances = new Insurances();
         List<Insurance> personInsurances = new ArrayList<>();
         List<Integer> insIds = personId == -1 ? getAllInsuranceIds() : person_insurance.get(personId);
         if (insIds != null && !insIds.isEmpty()) {
             insIds.forEach(insId -> {
-                personInsurances.add(insurance_cache.get(insId));
+                Insurance ins = insurance_cache.get(insId);
+                Person per = personService.getPerson(ins.getPersonId());
+                ins.setPersonFirstName(per.getFirstName());
+                ins.setPersonSurname(per.getSurname());
+                personInsurances.add(ins);
             });
         }
         insurances.setInsurances(personInsurances);
